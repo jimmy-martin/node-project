@@ -1,7 +1,7 @@
 require('dotenv').config({ path: '.env' });
 const express = require("express");
 const mongoose = require("mongoose");
-// const Router = require("../routes")
+const Router = require("./api/routes/routes")
 
 const app = express();
 
@@ -26,7 +26,7 @@ db.once("open", function () {
   console.log("Connected successfully");
 });
 
-// app.use(Router);
+app.use(Router);
 
 app.listen(3000, () => {
   console.log("Server is running at port 3000");
