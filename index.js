@@ -1,18 +1,33 @@
-//Load HTTP module
-const http = require("http");
-const hostname = '127.0.0.1';
-const port = 3000;
+require('dotenv').config({ path: '.env' });
+const express = require("express");
+const mongoose = require("mongoose");
+// const Router = require("../routes")
 
-//Create HTTP server and listen on port 3000 for requests
-const server = http.createServer((req, res) => {
+const app = express();
 
-  //Set the response HTTP header with HTTP status and Content type
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World\n');
+app.use(express.json());
+
+const username = process.env.DB_USERNAME;
+const password = process.env.DB_PASSWORD;
+const cluster = process.env.DB_CLUSTER;
+const dbname = process.env.DB_NAME;
+
+mongoose.connect(
+  `mongodb+srv://${username}:${password}@${cluster}.mongodb.net/${dbname}?retryWrites=true&w=majority`, 
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }
+);
+
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error: "));
+db.once("open", function () {
+  console.log("Connected successfully");
 });
 
-//listen for request on port 3000, and as a callback function have the port listened on logged
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+// app.use(Router);
+
+app.listen(3000, () => {
+  console.log("Server is running at port 3000");
 });
