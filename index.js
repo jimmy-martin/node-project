@@ -3,8 +3,11 @@ require('dotenv').config({
 });
 const express = require("express");
 const mongoose = require("mongoose");
-const contactRouter = require("./api/routes/contactRoutes");
+
 const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 const username = process.env.DB_USERNAME;
 const password = process.env.DB_PASSWORD;
@@ -24,12 +27,11 @@ db.once("open", function () {
   console.log("Connected successfully");
 });
 
-app.use('/contact', contactRouter);
+const contactRouter = require("./api/routes/contactRoutes");
+app.use(contactRouter);
 
 app.listen(3000, () => {
   console.log("Server is running at http://localhost:3000");
 });
-
-app.use(express.json());
 
 module.exports = app;
