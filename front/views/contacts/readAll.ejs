@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Projet CRM</title>
+</head>
+
+<body>
+
+    <h1>Contacts</h1>
+    <% if(contacts){ %>
+    <ul>
+        <% contacts.forEach(contact => { %>
+        <li>
+            <a href="/contact/<%= contact._id %>">
+                <%= contact.firstname %> <%= contact.lastname %>
+            </a>
+        </li>
+        <% }) %>
+    </ul>
+    <% } %>
+</body>
+
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Projet CRM</title>
+</head>
+
+<body>
+
+    <h1><%= contact.firstname %> <%= contact.lastname %></h1>
+    <ul>
+        <li>Prénom : <%= contact.firstname %></li>
+        <li>Nom : <%= contact.lastname %></li>
+        <li>Email : <%= contact.email %></li>
+        <% if (contact.phone_number){ %>
+            <li>Numéro de téléphone : <%= contact.phone_number %> </li>
+        <% } %>
+    </ul>
+</body>
+
+</html>
