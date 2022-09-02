@@ -45,11 +45,20 @@ router.get("/contact", async (request, response) => {
 
 router.post("/contact/:id", async (request, response) => {
   try {
-    const contact = await contactModel.findByIdAndUpdate(request.params.id, request.body);
-    response.send(await contactModel.findById(request.params.id));
+    await contactModel.findByIdAndUpdate(request.params.id, request.body);
+    const updatedContact = await contactModel.findById(request.params.id);
+    response.send(updatedContact);
   } catch (error) {
     response.status(500).send(error);
   }
 });
 
+router.delete("/contact/:id", async (request, response) => {
+  try {
+    const deletedContact = await contactModel.findByIdAndDelete(request.params.id, request.body);
+    response.send(deletedContact);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
 module.exports = router;
