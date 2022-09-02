@@ -4,9 +4,9 @@ const contactController = require('../controllers/contactController');
 
 router.post("/contact", contactController.create);
 
-router.get("/contact/:id", contactController.read);
-
 router.get("/contact", contactController.readAll);
+
+router.get("/contact/:id", contactController.read);
 
 router.post("/contact/:id", contactController.update);
 

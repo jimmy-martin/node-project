@@ -1,0 +1,19 @@
+<%- include('../partials/header') %>
+
+<h1><%= contact.firstname %> <%= contact.lastname %></h1>
+<ul>
+    <li>Prénom : <%= contact.firstname %></li>
+    <li>Nom : <%= contact.lastname %></li>
+    <li>Email : <%= contact.email %></li>
+    <% if (contact.phone_number){ %>
+    <li>Numéro de téléphone : <%= contact.phone_number %> </li>
+    <% } %>
+</ul>
+
+<a href="/update/<%= contact._id %>">Modifier le contact</a>
+<br>
+<a style="color: red;" href="/delete/<%= contact._id %>">Supprimer le contact</a>
+<br>
+<a href="/">Retour à l'accueil</a>
+
+<%- include('../partials/footer') %>

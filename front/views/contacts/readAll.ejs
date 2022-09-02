@@ -1,0 +1,18 @@
+<%- include('../partials/header') %>
+
+<h1>Contacts</h1>
+<% if(contacts){ %>
+<ul>
+    <% contacts.forEach(contact => { %>
+    <li>
+        <a href="/<%= contact._id %>">
+            <%= contact.firstname %> <%= contact.lastname %>
+        </a>
+    </li>
+    <% }) %>
+</ul>
+
+<a href="/new">Créer un nouveau contact</a>
+<% } %>
+
+<%- include('../partials/footer') %>
