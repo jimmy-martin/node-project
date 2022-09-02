@@ -43,6 +43,16 @@ router.get("/contact", async (request, response) => {
   }
 });
 
+router.get("/contact/:id", async (request, response) => {
+  const contact = await contactModel.findById(request.params.id);
+
+  try {
+    response.send(contact);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+})
+
 router.post("/contact/:id", async (request, response) => {
   try {
     await contactModel.findByIdAndUpdate(request.params.id, request.body);
