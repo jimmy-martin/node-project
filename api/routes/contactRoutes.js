@@ -1,74 +1,15 @@
 const express = require("express");
-const contactModel = require("../models/contactsModel");
 const router = express.Router();
+const contactController = require('../controllers/contactController');
 
-router.post("/contact", async (request, response) => {
-  const contact = new contactModel(request.body);
+router.post("/contact", contactController.create);
 
-  try {
-    await contact.save();
-    response.status(201).send(contact);
-  } catch (error) {
-    response.status(500).send(error);
-  }
-});
+router.get("/contact/:id", contactController.read);
 
-router.get("/contact", async (request, response) => {
-  if (Object.keys(request.query).length !== 0) {
-    const firstname = request.query.firstname || 0;
-    const lastname = request.query.lastname || 0;
-    const email = request.query.email || 0;
-    const phone_number = request.query.phone_number || -1;
+router.get("/contact", contactController.readAll);
 
-    var contacts = await contactModel.find({
-      $or: [{
-        firstname: new RegExp(firstname)
-      }, {
-        lastname: new RegExp(lastname)
-      }, {
-        email: new RegExp(email)
-      }, {
-        phone_number: new RegExp(phone_number)
-      }]
-    });
+router.post("/contact/:id", contactController.update);
 
-  } else {
-    var contacts = await contactModel.find({});
-  }
+router.delete("/contact/:id", contactController.delete);
 
-  try {
-    response.send(contacts);
-  } catch (error) {
-    response.status(500).send(error);
-  }
-});
-
-router.get("/contact/:id", async (request, response) => {
-  const contact = await contactModel.findById(request.params.id);
-
-  try {
-    response.send(contact);
-  } catch (error) {
-    response.status(500).send(error);
-  }
-})
-
-router.post("/contact/:id", async (request, response) => {
-  try {
-    await contactModel.findByIdAndUpdate(request.params.id, request.body);
-    const updatedContact = await contactModel.findById(request.params.id);
-    response.send(updatedContact);
-  } catch (error) {
-    response.status(500).send(error);
-  }
-});
-
-router.delete("/contact/:id", async (request, response) => {
-  try {
-    const deletedContact = await contactModel.findByIdAndDelete(request.params.id, request.body);
-    response.send(deletedContact);
-  } catch (error) {
-    response.status(500).send(error);
-  }
-});
 module.exports = router;
